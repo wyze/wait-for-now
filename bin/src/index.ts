@@ -8,6 +8,8 @@ const [owner, repo] = process.env.TRAVIS_REPO_SLUG.split('/')
 const ref = process.env.TRAVIS_COMMIT
 
 const getSuccessfulDeployment = async () => {
+  octokit.authenticate({ token: process.env.GITHUB_API_TOKEN, type: 'oauth' })
+
   const { data } = await octokit.repos.getStatuses({ owner, ref, repo })
   const deployments = data.filter((item) => item.context === 'deployment/now')
 
@@ -31,5 +33,5 @@ const deployed = async () => (await getSuccessfulDeployment()) !== undefined
     json: true,
   })
 
-  process.env.NOW_DEPLOYED_URL = `https://${host}`
+  console.log(`https://${host}`)
 })()

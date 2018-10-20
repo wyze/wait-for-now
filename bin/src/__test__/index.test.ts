@@ -1,9 +1,9 @@
 import nock from 'nock'
 import pWaitFor from 'p-wait-for'
 
-process.env.TRAVIS_REPO_SLUG =
-  process.env.TRAVIS_REPO_SLUG || 'wyze/wait-for-now'
-process.env.TRAVIS_COMMIT = process.env.TRAVIS_COMMIT || 'abcd1234'
+process.env.TRAVIS_REPO_SLUG = 'wyze/wait-for-now'
+process.env.TRAVIS_COMMIT = 'abcd1234'
+process.env.GITHUB_API_TOKEN = '111'
 
 nock('https://api.github.com')
   .persist()
@@ -12,6 +12,7 @@ nock('https://api.github.com')
       process.env.TRAVIS_COMMIT
     }/statuses`
   )
+  .query({ access_token: '111' })
   .reply(200, [
     {
       context: 'deployment/now',
@@ -26,10 +27,12 @@ nock('https://api.zeit.co')
     host: 'someurl-hash.now.sh',
   })
 
-test('it sets NOW_DEPLOYED_URL environment variable', async () => {
+test('it calls console.log with deployed url', async () => {
+  const log = jest.spyOn(console, 'log')
+
   require('..')
 
-  await pWaitFor(() => process.env.NOW_DEPLOYED_URL !== undefined)
+  await pWaitFor(() => log.mock.calls[0] !== undefined)
 
-  expect(process.env.NOW_DEPLOYED_URL).toBe('https://someurl-hash.now.sh')
+  expect(log).toHaveBeenCalledWith('https://someurl-hash.now.sh')
 })

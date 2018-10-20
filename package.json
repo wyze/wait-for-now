@@ -1,6 +1,6 @@
 {
   "name": "wait-for-now",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "Uses GitHub status to wait for a Now deployment to complete.",
   "license": "MIT",
   "repository": "wyze/wait-for-now",

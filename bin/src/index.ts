@@ -20,7 +20,7 @@ const deployed = async () => (await getSuccessfulDeployment()) !== undefined
 
 // Run the checker
 ;(async () => {
-  await pWaitFor(() => deployed())
+  await pWaitFor(deployed, { interval: 15000 })
 
   const { target_url: url } = await getSuccessfulDeployment()
   const deploymentId = url.split('=').pop()

@@ -5,7 +5,7 @@ import pWaitFor from 'p-wait-for'
 const octokit = new Octokit()
 
 const [owner, repo] = process.env.TRAVIS_REPO_SLUG.split('/')
-const ref = process.env.TRAVIS_COMMIT
+const ref = process.env.TRAVIS_PULL_REQUEST_SHA
 
 const getSuccessfulDeployment = async () => {
   octokit.authenticate({ token: process.env.GITHUB_API_TOKEN, type: 'oauth' })

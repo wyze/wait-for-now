@@ -2,14 +2,14 @@ import nock from 'nock'
 import pWaitFor from 'p-wait-for'
 
 process.env.TRAVIS_REPO_SLUG = 'wyze/wait-for-now'
-process.env.TRAVIS_COMMIT = 'abcd1234'
+process.env.TRAVIS_PULL_REQUEST_SHA = 'abcd1234'
 process.env.GITHUB_API_TOKEN = '111'
 
 nock('https://api.github.com')
   .persist()
   .get(
     `/repos/${process.env.TRAVIS_REPO_SLUG}/commits/${
-      process.env.TRAVIS_COMMIT
+      process.env.TRAVIS_PULL_REQUEST_SHA
     }/statuses`
   )
   .query({ access_token: '111' })

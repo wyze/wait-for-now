@@ -1,0 +1,72 @@
+{
+  "name": "wait-for-now",
+  "version": "0.0.0",
+  "description": "Uses GitHub status to wait for a Now deployment to complete.",
+  "license": "MIT",
+  "repository": "wyze/wait-for-now",
+  "author": {
+    "name": "Neil Kistner",
+    "email": "neil.kistner@gmail.com",
+    "url": "neilkistner.com"
+  },
+  "bin": "bin/index.js",
+  "scripts": {
+    "build": "rio -b '#!/usr/bin/env node' -e @octokit/rest -o bin/index.js bin/src/index.ts",
+    "clean": "rimraf bin/*.js",
+    "prebuild": "yarn clean",
+    "prettier": "prettier --write \"bin/**/*.ts\"",
+    "preversion": "yarn build",
+    "postbuild": "shx chmod a+x bin/index.js",
+    "test": "jest",
+    "version": "write-changelog"
+  },
+  "files": [
+    "bin/index.js"
+  ],
+  "dependencies": {
+    "@octokit/rest": "^15.15.1"
+  },
+  "devDependencies": {
+    "@types/got": "^8.3.4",
+    "@types/jest": "^23.3.5",
+    "@types/nock": "^9.3.0",
+    "@types/p-wait-for": "^1.0.0",
+    "@wyze/rio": "^1.2.0",
+    "got": "^9.2.2",
+    "jest": "^23.6.0",
+    "nock": "^10.0.1",
+    "p-wait-for": "^2.0.0",
+    "prettier": "^1.14.3",
+    "rimraf": "^2.6.2",
+    "shx": "^0.3.2",
+    "ts-jest": "^23.10.4",
+    "typescript": "^3.1.3",
+    "write-changelog": "^1.2.0"
+  },
+  "jest": {
+    "collectCoverageFrom": [
+      "**/src/*.ts"
+    ],
+    "globals": {
+      "ts-jest": {
+        "diagnostics": false
+      }
+    },
+    "moduleFileExtensions": [
+      "js",
+      "json",
+      "ts"
+    ],
+    "testEnvironment": "node",
+    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.ts$",
+    "transform": {
+      "^.+\\.ts$": "ts-jest"
+    }
+  },
+  "prettier": {
+    "arrowParens": "always",
+    "semi": false,
+    "singleQuote": true,
+    "trailingComma": "es5"
+  }
+}

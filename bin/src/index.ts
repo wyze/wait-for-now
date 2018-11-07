@@ -11,7 +11,7 @@ const getSuccessfulDeployment = async () => {
   octokit.authenticate({ token: process.env.GITHUB_API_TOKEN, type: 'oauth' })
 
   const { data } = await octokit.repos.getStatuses({ owner, ref, repo })
-  const deployments = data.filter((item) => item.context === 'deployment/now')
+  const deployments = data.filter((item) => /^(deployment\/)?now$/.test(item.context))
 
   return deployments.find((item) => item.state === 'success')
 }

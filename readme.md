@@ -23,7 +23,7 @@ $ npm install --save wait-for-now
 ## Usage
 
 Requires the following environment variables:
- - `GITHUB_API_TOKEN`
+ - `GITHUB_API_TOKEN` with `repo_deployment` scope
  - `TRAVIS_PULL_REQUEST_SHA`
  - `TRAVIS_REPO_SLUG`
  - `ZEIT_API_TOKEN`
